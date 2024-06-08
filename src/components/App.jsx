@@ -9,9 +9,10 @@ import Styles from "./App.module.css";
 export default class App extends Component {
   constructor() {
     super();
-    try {
-      localStorage.getItem("contacts");
-    } catch (error) {
+
+    const local = localStorage.getItem("contacts");
+    if (local) {
+    } else {
       localStorage.setItem("contacts", JSON.stringify([]));
     }
   }
