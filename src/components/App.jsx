@@ -7,6 +7,15 @@ import ContactList from "./ContactList";
 import Styles from "./App.module.css";
 
 export default class App extends Component {
+  constructor() {
+    super();
+    try {
+      localStorage.getItem("contacts");
+    } catch (error) {
+      localStorage.setItem("contacts", JSON.stringify([]));
+    }
+  }
+
   state = {
     contacts: [],
     name: "",
@@ -52,12 +61,8 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    try {
-      const contactsFromLocalStorage = localStorage.getItem("contacts");
-      this.setState({ contacts: JSON.parse(contactsFromLocalStorage) });
-    } catch (error) {
-      console.log(error);
-    }
+    const contactsFromLocalStorage = localStorage.getItem("contacts");
+    this.setState({ contacts: JSON.parse(contactsFromLocalStorage) });
   }
   componentDidUpdate() {
     localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
