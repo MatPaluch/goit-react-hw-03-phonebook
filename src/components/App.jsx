@@ -8,12 +8,7 @@ import Styles from "./App.module.css";
 
 export default class App extends Component {
   state = {
-    contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-    ],
+    contacts: [],
     name: "",
     number: "",
     filter: "",
@@ -32,7 +27,6 @@ export default class App extends Component {
 
   buttonAddContact = (ev) => {
     ev.preventDefault();
-    console.log(this.state.name);
     if (this.state.contacts.find((obj) => obj.name === this.state.name)) {
       alert(this.state.name + " is already in contacts");
     } else {
@@ -56,6 +50,18 @@ export default class App extends Component {
       contacts: prevState.contacts.filter((obj) => obj.id !== ev.target.value),
     }));
   };
+
+  componentDidMount() {
+    try {
+      const contactsFromLocalStorage = localStorage.getItem("contacts");
+      this.setState({ contacts: JSON.parse(contactsFromLocalStorage) });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  componentDidUpdate() {
+    localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+  }
 
   render() {
     const options = {
