@@ -17,7 +17,7 @@ export default class App extends Component {
     }
   }
 
-  static state = {
+  state = {
     contacts: [],
     name: "",
     number: "",
